@@ -53,7 +53,7 @@ defineShortcuts({
 
 <template>
   <UDashboardPanel
-    class="bg-elevated/15 transition-all duration-300"
+    class="bg-elevated/15 transition-all duration-300 hidden md:block"
     :class="{
       'w-28 max-w-28': isCollapsedLeftSidebar,
       'w-64 max-w-64': !isCollapsedLeftSidebar
