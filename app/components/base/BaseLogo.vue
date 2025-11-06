@@ -9,13 +9,14 @@
         icon: `text-${props.size}`,
         root: 'bg-(--color-primary-100) dark:bg-(--color-primary-900)'
       }"
-      class="rounded-lg"
+      class="rounded-xl"
     />
 
     <div
       v-if="!collapsed"
       class="truncate w-full font-bold bg-linear-to-r dark:from-primary-700 from-primary-600 via-sky-700 to-purple-800 inline-block text-transparent bg-clip-text"
       :class="collapsed ? 'text-sm' : 'text-xl'"
+      v-bind="$attrs"
     >
       Snap Storage
     </div>

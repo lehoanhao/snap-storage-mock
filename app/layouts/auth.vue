@@ -2,8 +2,8 @@
   <div class="h-screen flex items-center justify-center overlay">
     <div class="gradient" />
     <div class="flex flex-col items-center gap-0">
-      <BaseLogo class="h-10 mb-8 backdrop-blur" />
-      <UPageCard variant="subtle" class="min-w-sm w-full max-w-md">
+      <BaseLogo class="!text-3xl" size="3xl" />
+      <UPageCard variant="subtle" class="min-w-sm w-full max-w-md mt-6">
         <slot />
       </UPageCard>
     </div>
