@@ -56,11 +56,30 @@ const isMobile = breakpoints.smaller('lg')
       <template #leading>
         <UDashboardSidebarCollapse />
       </template>
+      <template #trailing>
+        <UBadge :label="filteredMails.length" variant="subtle" />
+      </template>
+
+      <template #right>
+        <UTabs
+          v-model="selectedTab"
+          :items="tabItems"
+          :content="false"
+          size="xs"
+        />
+      </template>
     </UDashboardNavbar>
-    <div class="w-full h-full flex justify-center items-center bg-default/10 p-8">
-      開発中
-    </div>
+    <InboxList v-model="selectedMail" :mails="filteredMails" class="" />
   </UDashboardPanel>
 
+  <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+
+  <ClientOnly>
+    <USlideover v-if="isMobile" v-model:open="isMailPanelOpen">
+      <template #content>
+        <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+      </template>
+    </USlideover>
+  </ClientOnly>
   <BaseRightSideBar />
 </template>

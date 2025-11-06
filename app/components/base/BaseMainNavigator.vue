@@ -34,10 +34,11 @@
         />
 
         <div
-          class="text-xs mt-1 text-center"
+          class="text-xs mt-1 text-center truncate"
           :class="{
             '': !active,
-            'font-bold': active
+            'font-bold': active,
+            'text-[10px]': collapsed
           }"
         >
           {{ item.label }}
@@ -48,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   collapsed: boolean | undefined
 }>()
 const route = useRoute()
@@ -104,12 +105,57 @@ const items = computed(() => {
           text: 'text-orange-700 text-2xl dark:text-orange-500'
         }
       }
+    },
+    {
+      id: 'us',
+      label: '利用者設定',
+      iconActive: 'i-tdesign-user-setting',
+      icon: 'i-tdesign-user-setting-filled',
+      to: '/us/bs/settings/office/basic/user',
+      active: route.params.main === 'us',
+      ui: {
+        active: {
+          bg: 'bg-green-500/80',
+          text: 'text-white text-2xl'
+        },
+        inactive: {
+          bg: 'border-default border bg-green-50 dark:bg-default dark:border-default',
+          text: 'text-green-700 text-2xl dark:text-green-500'
+        }
+      },
+      hidden: !props.collapsed
+    },
+    {
+      id: 'os',
+      label: '事業所設定',
+      iconActive: 'i-fluent-archive-settings-16-regular',
+      icon: 'i-fluent-archive-settings-16-filled',
+      to: '/os/bs/settings/office/basic/user',
+      active: route.params.main === 'os',
+      ui: {
+        active: {
+          bg: 'bg-yellow-500/80',
+          text: 'text-white text-2xl'
+        },
+        inactive: {
+          bg: 'border-default border bg-yellow-50 dark:bg-default dark:border-default',
+          text: 'text-yellow-700 text-2xl dark:text-yellow-500'
+        }
+      },
+      hidden: !props.collapsed
     }
-  ].map((item) => {
-    return {
-      ...item,
-      active: route.params.main === item.id
-    }
-  })
+  ]
+    .filter((item) => {
+      if (props.collapsed) {
+        return true
+      }
+      return !item.hidden
+    })
+    .map((item) => {
+      return {
+        ...item,
+        active: route.params.main === item.id
+      }
+    })
 })
 </script>

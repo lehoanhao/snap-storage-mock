@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-3 text-xs text-muted font-mono font-semibold bg-elevated/85 border-b border-default truncate"
+    class="px-3 text-xs text-muted font-mono font-semibold bg-primary/10 border-b border-default truncate"
     :class="{
       'py-0 text-center': collapsed,
       'py-2': !collapsed
@@ -50,8 +50,9 @@
         />
         <div
           :class="{
-            'text-[10px] text-center': collapsed,
-            'text-left': !collapsed
+            'text-[10px] text-center ': collapsed,
+            'text-left': !collapsed,
+            'font-bold': active
           }"
         >
           {{ item.label }}

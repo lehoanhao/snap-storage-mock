@@ -4,9 +4,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const route = useRoute()
 const toast = useToast()
 
-const open = ref(false)
-const openRight = ref(true)
-const rightCollapsed = ref(false)
+const { isCollapsedLeftSidebar } = useApp()
 const links = [
   [
     {
@@ -102,10 +100,12 @@ onMounted(async () => {
   <UDashboardGroup unit="rem">
     <UDashboardSidebar
       id="default"
-      v-model:open="open"
+      v-model:collapsed="isCollapsedLeftSidebar"
       collapsible
       resizable
       class="bg-elevated/25"
+      :collapsed-size="5"
+      :min-size="14"
       :ui="{
         header: 'h-[63px]',
         footer: 'lg:border-t lg:border-default',
@@ -116,8 +116,8 @@ onMounted(async () => {
         <BaseLogo
           :collapsed="collapsed"
           size="md"
-          class="cursor-pointer"
-          @click="navigateTo('/fax/0/')"
+          class="cursor-pointer mx-auto"
+          @click="navigateTo('/fax/0/notifications')"
         />
       </template>
 

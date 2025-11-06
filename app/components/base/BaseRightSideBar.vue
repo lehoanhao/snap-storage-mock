@@ -4,6 +4,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const route = useRoute()
 const { isNotificationsSlideoverOpen } = useDashboard()
 const { currentRightNavigator } = useNavigator()
+const { isCollapsedLeftSidebar } = useApp()
 const items = computed(() => {
   return [
     {
@@ -52,11 +53,11 @@ defineShortcuts({
 
 <template>
   <UDashboardPanel
-    resizable
-    :max-size="20"
-    :min-size="20"
-    :default-size="20"
-    class="bg-elevated/15 !w-64 max-w-64"
+    class="bg-elevated/15 transition-all duration-300"
+    :class="{
+      'w-28 max-w-28': isCollapsedLeftSidebar,
+      'w-64 max-w-64': !isCollapsedLeftSidebar
+    }"
     :ui="{
       body: 'px-0 py-0 gap-0 sm:p-0 sm:gap-0'
     }"
@@ -73,22 +74,28 @@ defineShortcuts({
             color="neutral"
             variant="ghost"
             square
-            @click="isNotificationsSlideoverOpen = true"
+            @click="navigateTo('/fax/0/notifications')"
           >
             <UChip color="error" inset>
               <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
             </UChip>
           </UButton>
         </UTooltip>
-        <UserMenu :collapsed="collapsed" class="w-full flex-1" />
+        <UserMenu
+          :collapsed="isCollapsedLeftSidebar"
+          :class="{
+            'w-full flex-1': !isCollapsedLeftSidebar
+          }"
+        />
       </UDashboardNavbar>
     </template>
 
     <template #body>
       <UNavigationMenu
-        :collapsed="collapsed"
+        v-if="!isCollapsedLeftSidebar"
+        :collapsed="isCollapsedLeftSidebar"
         :items="items"
-        :orientation="collapsed ? 'vertical' : 'horizontal'"
+        :orientation="isCollapsedLeftSidebar ? 'vertical' : 'horizontal'"
         class="w-full navigator-full"
         :ui="{
           list: 'justify-between',
@@ -128,9 +135,9 @@ defineShortcuts({
       </UNavigationMenu>
       <div v-if="route.params.sub != '0'">
         <UNavigationMenu
-          :collapsed="collapsed"
+          :collapsed="isCollapsedLeftSidebar"
           :items="currentRightNavigator?.items"
-          :orientation="collapsed ? 'vertical' : 'vertical'"
+          :orientation="isCollapsedLeftSidebar ? 'vertical' : 'vertical'"
           tooltip
           popover
           variant="link"
@@ -146,8 +153,8 @@ defineShortcuts({
           <template #item="{ item, active }">
             <div
               :class="{
-                'flex-col gap-1': collapsed,
-                'flex-row items-center gap-2': !collapsed,
+                'flex-col gap-2': isCollapsedLeftSidebar,
+                'flex-row items-center gap-2': !isCollapsedLeftSidebar,
                 'border-r-default': !active
               }"
               class="border-r-4 rounded-r-sm py-3 overflow-hidden flex items-center justify-center truncate"
@@ -155,8 +162,8 @@ defineShortcuts({
               <UIcon :name="item.icon" class="size-5 ml-3" />
               <div
                 :class="{
-                  'text-[8px]': collapsed,
-                  'text-left': !collapsed
+                  'text-[10px] text-center': isCollapsedLeftSidebar,
+                  'text-left': !isCollapsedLeftSidebar
                 }"
               >
                 {{ item.label }}
@@ -166,7 +173,7 @@ defineShortcuts({
         </UNavigationMenu>
       </div>
       <slot v-else>
-        <div class="h-full flex flex-col gap-4 p-2">
+        <div v-if="!isCollapsedLeftSidebar" class="h-full flex flex-col gap-4 p-2">
           <img
             src="/banner02.jpeg"
             class="object object-cover h-full rounded-2xl"
