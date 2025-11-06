@@ -122,7 +122,7 @@ const items = computed<DropdownMenuItem[][]>(() => ([
         trailingIcon: collapsed ? undefined : 'i-lucide-chevrons-up-down'
       }"
       color="neutral"
-      variant="ghost"
+      variant="soft"
       block
       :square="collapsed"
       class="data-[state=open]:bg-elevated"

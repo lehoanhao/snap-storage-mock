@@ -5,71 +5,29 @@ const route = useRoute()
 const toast = useToast()
 
 const open = ref(false)
-const openRight = ref(false)
+const openRight = ref(true)
+const rightCollapsed = ref(false)
 const links = [
   [
     {
-      label: 'Home',
-      icon: 'i-lucide-house',
-      to: '/',
-      onSelect: () => {
-        open.value = false
-      }
-    },
-    {
-      label: 'Inbox',
-      icon: 'i-lucide-inbox',
-      to: '/inbox',
+      label: 'FAX受信',
+      icon: 'i-solar-inbox-in-linear',
       badge: '4',
       onSelect: () => {
         open.value = false
       }
     },
     {
-      label: 'Customers',
-      icon: 'i-lucide-users',
-      to: '/customers',
+      label: 'FAX送信',
+      icon: 'i-solar-card-send-linear',
       onSelect: () => {
         open.value = false
       }
     },
     {
-      label: 'Settings',
-      to: '/settings',
-      icon: 'i-lucide-settings',
-      defaultOpen: true,
-      type: 'trigger',
-      children: [
-        {
-          label: 'General',
-          to: '/settings',
-          exact: true,
-          onSelect: () => {
-            open.value = false
-          }
-        },
-        {
-          label: 'Members',
-          to: '/settings/members',
-          onSelect: () => {
-            open.value = false
-          }
-        },
-        {
-          label: 'Notifications',
-          to: '/settings/notifications',
-          onSelect: () => {
-            open.value = false
-          }
-        },
-        {
-          label: 'Security',
-          to: '/settings/security',
-          onSelect: () => {
-            open.value = false
-          }
-        }
-      ]
+      label: '実績報告',
+      icon: 'i-solar-file-text-linear',
+      type: 'trigger'
     }
   ],
   [
@@ -87,7 +45,31 @@ const links = [
     }
   ]
 ] satisfies NavigationMenuItem[][]
-
+const items = computed(() => {
+  return [
+    {
+      label: 'フォルダ',
+      icon: 'i-solar-folder-with-files-linear',
+      iconActive: 'i-solar-folder-with-files-bold-duotone',
+      to: '#folder',
+      active: route.hash === '#folder'
+    },
+    {
+      label: '掲示板',
+      icon: 'i-solar-clipboard-linear',
+      iconActive: 'i-solar-clipboard-bold-duotone',
+      to: '#bulletin-board',
+      active: route.hash === '#bulletin-board'
+    },
+    {
+      label: 'FAX',
+      icon: 'i-solar-printer-linear',
+      iconActive: 'i-solar-printer-bold-duotone',
+      to: '#fax',
+      active: route.hash === '#fax'
+    }
+  ]
+})
 const groups = computed(() => [
   {
     id: 'links',
@@ -149,69 +131,91 @@ onMounted(async () => {
       collapsible
       resizable
       class="bg-elevated/25"
-      :ui="{ footer: 'lg:border-t lg:border-default' }"
+      :ui="{
+        header: 'h-[63px]',
+        footer: 'lg:border-t lg:border-default',
+        body: 'px-0 py-0 gap-0'
+      }"
     >
       <template #header="{ collapsed }">
-        <BaseLogo :collapsed="collapsed" size="md" />
+        <BaseLogo
+          :collapsed="collapsed"
+          size="md"
+          class="cursor-pointer"
+          @click="navigateTo('/')"
+        />
       </template>
 
       <template #default="{ collapsed }">
+        <UNavigationMenu
+          :collapsed="collapsed"
+          :items="items"
+          :orientation="collapsed ? 'vertical' : 'horizontal'"
+          class="w-full bg-elevated border-b border-t border-default mb-4 navigator-full"
+          :ui="{
+            list: 'justify-between',
+            item: 'flex-1 py-0',
+            link: 'after:-bottom-0 after:inset-x-2 after:block after:h-0.5'
+          }"
+          highlight
+          color="primary"
+          variant="link"
+        >
+          <template #item="{ item, active }">
+            <div
+              class="group overflow-visible flex flex-col items-center justify-center h-9 truncate"
+            >
+              <UIcon
+                :name="active ? item.iconActive : item.icon"
+                class="size-7 transition-all duration-200 group-hover:scale-125"
+                :class="{
+                  'scale-150': active
+                }"
+              />
+              <div
+                class="text-[10px] mt-1 text-center"
+                :class="{
+                  'text-dimmed': !active,
+                  'font-bold scale-125': active
+                }"
+              >
+                {{ item.label }}
+              </div>
+            </div>
+          </template>
+        </UNavigationMenu>
         <UNavigationMenu
           :collapsed="collapsed"
           :items="links[0]"
           orientation="vertical"
           tooltip
           popover
-        />
-
-        <UNavigationMenu
-          :collapsed="collapsed"
-          :items="links[1]"
-          orientation="vertical"
-          tooltip
-          class="mt-auto"
-        />
-      </template>
-
-      <template #footer="{ collapsed }">
-        <UserMenu :collapsed="collapsed" />
+        >
+          <template #item="{ item }">
+            <div
+              :class="{
+                'flex-col': collapsed,
+                'flex-row items-center gap-2': !collapsed
+              }"
+              class="overflow-hidden flex items-center justify-center truncate"
+            >
+              <UIcon :name="item.icon" class="size-5" />
+              <div
+                :class="{
+                  'text-[8px]': collapsed
+                }"
+              >
+                {{ item.label }}
+              </div>
+            </div>
+          </template>
+        </UNavigationMenu>
       </template>
     </UDashboardSidebar>
 
     <UDashboardSearch :groups="groups" />
 
     <slot />
-    <BaseRightSideBar />
-
-    <!-- <UDashboardSidebar
-      v-model:open="openRight"
-      collapsible
-      resizable
-      class="bg-elevated/25"
-      :ui="{ footer: 'lg:border-t lg:border-default' }"
-    >
-      <template #header="{ collapsed }">
-        <UserMenu :collapsed="collapsed" />
-      </template>
-
-      <template #default="{ collapsed }">
-        <UNavigationMenu
-          :collapsed="collapsed"
-          :items="links[0]"
-          orientation="vertical"
-          tooltip
-          popover
-        />
-
-        <UNavigationMenu
-          :collapsed="collapsed"
-          :items="links[1]"
-          orientation="vertical"
-          tooltip
-          class="mt-auto"
-        />
-      </template>
-    </UDashboardSidebar> -->
     <NotificationsSlideover />
   </UDashboardGroup>
 </template>

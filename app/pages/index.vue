@@ -1,66 +1,99 @@
 <script setup lang="ts">
-import { sub } from 'date-fns'
-import type { DropdownMenuItem } from '@nuxt/ui'
-import type { Period, Range } from '~/types'
+import { computed, ref, watch } from 'vue'
+import { breakpointsTailwind } from '@vueuse/core'
+import type { Mail } from '~/types'
 
-const { isNotificationsSlideoverOpen } = useDashboard()
+const tabItems = [{
+  label: '全て',
+  value: 'all'
+}, {
+  label: '未読',
+  value: 'unread'
+}]
+const selectedTab = ref('all')
 
-const items = [
-  [
-    {
-      label: 'New mail',
-      icon: 'i-lucide-send',
-      to: '/inbox'
-    },
-    {
-      label: 'New customer',
-      icon: 'i-lucide-user-plus',
-      to: '/customers'
-    }
-  ]
-] satisfies DropdownMenuItem[][]
+const { data: mails } = await useFetch<Mail[]>('/api/mails', { default: () => [] })
 
-const range = shallowRef<Range>({
-  start: sub(new Date(), { days: 14 }),
-  end: new Date()
+// Filter mails based on the selected tab
+const filteredMails = computed(() => {
+  if (selectedTab.value === 'unread') {
+    return mails.value.filter(mail => !!mail.unread)
+  }
+
+  return mails.value
 })
-const period = ref<Period>('daily')
+
+const selectedMail = ref<Mail | null>()
+
+const isMailPanelOpen = computed({
+  get() {
+    return !!selectedMail.value
+  },
+  set(value: boolean) {
+    if (!value) {
+      selectedMail.value = null
+    }
+  }
+})
+
+// Reset selected mail if it's not in the filtered mails
+watch(filteredMails, () => {
+  if (!filteredMails.value.find(mail => mail.id === selectedMail.value?.id)) {
+    selectedMail.value = null
+  }
+})
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const isMobile = breakpoints.smaller('lg')
 </script>
 
 <template>
-  <UDashboardPanel id="home">
-    <template #header>
-      <UDashboardNavbar title="ホーム" :ui="{ right: 'gap-3' }">
-        <template #leading>
-          <UDashboardSidebarCollapse name="default" />
-        </template>
+  <UDashboardPanel
+    id="inbox-1"
+    class="scrollbar-thin"
+  >
+    <UDashboardNavbar title="お知らせ">
+      <template #leading>
+        <UDashboardSidebarCollapse />
+      </template>
+      <template #trailing>
+        <UBadge :label="filteredMails.length" variant="subtle" />
+      </template>
 
-        <template #right>
-          <UTooltip text="Notifications" :shortcuts="['N']">
-            <UButton
-              color="neutral"
-              variant="ghost"
-              square
-              @click="isNotificationsSlideoverOpen = true"
-            >
-              <UChip color="error" inset>
-                <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
-              </UChip>
-            </UButton>
-          </UTooltip>
-        </template>
-      </UDashboardNavbar>
-
-      <UDashboardToolbar>
-        <template #left>
-          <!-- NOTE: The `-ms-1` class is used to align with the `DashboardSidebarCollapse` button here. -->
-          <HomeDateRangePicker v-model="range" class="-ms-1" />
-
-          <HomePeriodSelect v-model="period" :range="range" />
-        </template>
-      </UDashboardToolbar>
-    </template>
-
-    <template #body />
+      <template #right>
+        <UTabs
+          v-model="selectedTab"
+          :items="tabItems"
+          :content="false"
+          size="xs"
+        />
+      </template>
+    </UDashboardNavbar>
+    <InboxList v-model="selectedMail" :mails="filteredMails" class="" />
   </UDashboardPanel>
+
+  <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+
+  <ClientOnly>
+    <USlideover v-if="isMobile" v-model:open="isMailPanelOpen">
+      <template #content>
+        <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+      </template>
+    </USlideover>
+  </ClientOnly>
+  <BaseRightSideBar>
+    <div class="p-4 h-full flex flex-col gap-4">
+      <UCard
+        v-for="i in 2"
+        :key="i"
+        variant="subtle"
+        class="p-4 flex-1 flex items-center justify-center"
+      >
+        <div class="text-sm text-muted text-center">
+          <b class="text-lg">バナー </b><br>
+          QLC管理画面で設定した内容を表示。
+        </div>
+      </UCard>
+    </div>
+  </BaseRightSideBar>
 </template>
