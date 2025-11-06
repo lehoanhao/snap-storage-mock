@@ -1,58 +1,58 @@
 const members = [{
-  name: 'Anthony Fu',
-  username: 'antfu',
-  role: 'member',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/antfu' }
-}, {
-  name: 'Baptiste Leproux',
-  username: 'larbish',
-  role: 'member',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/larbish' }
-}, {
-  name: 'Benjamin Canac',
-  username: 'benjamincanac',
+  name: 'Lan Nguyen',
+  username: 'lan.nguyen',
   role: 'owner',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/benjamincanac' }
+  avatar: { src: 'https://i.pravatar.cc/128?u=lan.nguyen' }
 }, {
-  name: 'Céline Dumerc',
-  username: 'celinedumerc',
+  name: 'Noah Bennett',
+  username: 'noah.bennett',
   role: 'member',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/celinedumerc' }
+  avatar: { src: 'https://i.pravatar.cc/128?u=noah.bennett' }
 }, {
-  name: 'Daniel Roe',
-  username: 'danielroe',
+  name: 'Amelia Tran',
+  username: 'amelia.tran',
   role: 'member',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/danielroe' }
+  avatar: { src: 'https://i.pravatar.cc/128?u=amelia.tran' }
 }, {
-  name: 'Farnabaz',
-  username: 'farnabaz',
-  role: 'member',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/farnabaz' }
-}, {
-  name: 'Ferdinand Coumau',
-  username: 'FerdinandCoumau',
-  role: 'member',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/FerdinandCoumau' }
-}, {
-  name: 'Hugo Richard',
-  username: 'hugorcd',
+  name: 'Sofia Martinez',
+  username: 'sofia.martinez',
   role: 'owner',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/hugorcd' }
+  avatar: { src: 'https://i.pravatar.cc/128?u=sofia.martinez' }
 }, {
-  name: 'Pooya Parsa',
-  username: 'pi0',
+  name: 'Ethan Park',
+  username: 'ethan.park',
   role: 'member',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/pi0' }
+  avatar: { src: 'https://i.pravatar.cc/128?u=ethan.park' }
 }, {
-  name: 'Sarah Moriceau',
-  username: 'SarahM19',
+  name: 'Priya Sharma',
+  username: 'priya.sharma',
   role: 'member',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/SarahM19' }
+  avatar: { src: 'https://i.pravatar.cc/128?u=priya.sharma' }
 }, {
-  name: 'Sébastien Chopin',
-  username: 'Atinux',
+  name: 'Jonah Reed',
+  username: 'jonah.reed',
+  role: 'member',
+  avatar: { src: 'https://i.pravatar.cc/128?u=jonah.reed' }
+}, {
+  name: 'Mia Chen',
+  username: 'mia.chen',
+  role: 'member',
+  avatar: { src: 'https://i.pravatar.cc/128?u=mia.chen' }
+}, {
+  name: 'Oliver Rivera',
+  username: 'oliver.rivera',
+  role: 'member',
+  avatar: { src: 'https://i.pravatar.cc/128?u=oliver.rivera' }
+}, {
+  name: 'Grace Ito',
+  username: 'grace.ito',
+  role: 'member',
+  avatar: { src: 'https://i.pravatar.cc/128?u=grace.ito' }
+}, {
+  name: 'Camila Torres',
+  username: 'camila.torres',
   role: 'owner',
-  avatar: { src: 'https://ipx.nuxt.com/f_auto,s_192x192/gh_avatar/atinux' }
+  avatar: { src: 'https://i.pravatar.cc/128?u=camila.torres' }
 }]
 
 export default eventHandler(async () => {

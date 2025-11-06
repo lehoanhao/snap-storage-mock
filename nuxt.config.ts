@@ -5,11 +5,17 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@vueuse/nuxt'
   ],
+  ssr: false,
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false
+    }
+  ],
 
   devtools: {
     enabled: true
   },
-
   css: ['~/assets/css/main.css'],
 
   routeRules: {
