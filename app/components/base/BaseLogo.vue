@@ -6,10 +6,10 @@
       icon="i-clarity-storage-outline-badged"
       :size="size as any"
       :ui="{
-        icon: `text-${props.size}`,
-        root: 'bg-(--color-primary-100) dark:bg-(--color-primary-900)'
+        icon: `w-full h-full text-white`,
+        root: 'bg-(--color-primary-500) dark:bg-(--color-primary-900) p-1.5'
       }"
-      class="rounded-xl"
+      class="rounded-lg"
     />
 
     <div

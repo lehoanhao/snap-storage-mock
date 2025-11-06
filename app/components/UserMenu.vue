@@ -26,50 +26,6 @@ const items = computed<DropdownMenuItem[][]>(() => ([
     avatar: user.value.avatar
   }],
   [{
-    label: 'テーマ設定',
-    icon: 'i-lucide-palette',
-    children: [{
-      label: '一次色',
-      slot: 'chip',
-      chip: appConfig.ui.colors.primary,
-      content: {
-        align: 'center',
-        collisionPadding: 16
-      },
-      children: colors.map(color => ({
-        label: color,
-        chip: color,
-        slot: 'chip',
-        checked: appConfig.ui.colors.primary === color,
-        type: 'checkbox',
-        onSelect: (e) => {
-          e.preventDefault()
-
-          appConfig.ui.colors.primary = color
-        }
-      }))
-    }, {
-      label: '中性色',
-      slot: 'chip',
-      chip: appConfig.ui.colors.neutral === 'neutral' ? 'old-neutral' : appConfig.ui.colors.neutral,
-      content: {
-        align: 'end',
-        collisionPadding: 16
-      },
-      children: neutrals.map(color => ({
-        label: color,
-        chip: color === 'neutral' ? 'old-neutral' : color,
-        slot: 'chip',
-        type: 'checkbox',
-        checked: appConfig.ui.colors.neutral === color,
-        onSelect: (e) => {
-          e.preventDefault()
-
-          appConfig.ui.colors.neutral = color
-        }
-      }))
-    }]
-  }, {
     label: '外観設定',
     icon: 'i-lucide-sun-moon',
     children: [{
@@ -103,7 +59,7 @@ const items = computed<DropdownMenuItem[][]>(() => ([
     to: 'https://snapstorage.example.com/docs',
     target: '_blank'
   }, {
-    label: 'Log out',
+    label: 'ログアウト',
     icon: 'i-lucide-log-out'
   }]
 ]))

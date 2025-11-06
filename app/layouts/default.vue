@@ -45,31 +45,6 @@ const links = [
     }
   ]
 ] satisfies NavigationMenuItem[][]
-const items = computed(() => {
-  return [
-    {
-      label: 'フォルダ',
-      icon: 'i-solar-folder-with-files-linear',
-      iconActive: 'i-solar-folder-with-files-bold-duotone',
-      to: '#folder',
-      active: route.hash === '#folder'
-    },
-    {
-      label: '掲示板',
-      icon: 'i-solar-clipboard-linear',
-      iconActive: 'i-solar-clipboard-bold-duotone',
-      to: '#bulletin-board',
-      active: route.hash === '#bulletin-board'
-    },
-    {
-      label: 'FAX',
-      icon: 'i-solar-printer-linear',
-      iconActive: 'i-solar-printer-bold-duotone',
-      to: '#fax',
-      active: route.hash === '#fax'
-    }
-  ]
-})
 const groups = computed(() => [
   {
     id: 'links',
@@ -142,74 +117,19 @@ onMounted(async () => {
           :collapsed="collapsed"
           size="md"
           class="cursor-pointer"
-          @click="navigateTo('/')"
+          @click="navigateTo('/fax/0/')"
         />
       </template>
 
       <template #default="{ collapsed }">
-        <UNavigationMenu
+        <BaseMainNavigator :collapsed="collapsed" />
+        <BaseLeftNavigator
           :collapsed="collapsed"
-          :items="items"
-          :orientation="collapsed ? 'vertical' : 'horizontal'"
-          class="w-full bg-elevated border-b border-t border-default mb-4 navigator-full"
-          :ui="{
-            list: 'justify-between',
-            item: 'flex-1 py-0',
-            link: 'after:-bottom-0 after:inset-x-2 after:block after:h-0.5'
+          class="border-default"
+          :class="{
+            'border-t': collapsed
           }"
-          highlight
-          color="primary"
-          variant="link"
-        >
-          <template #item="{ item, active }">
-            <div
-              class="group overflow-visible flex flex-col items-center justify-center h-9 truncate"
-            >
-              <UIcon
-                :name="active ? item.iconActive : item.icon"
-                class="size-7 transition-all duration-200 group-hover:scale-125"
-                :class="{
-                  'scale-150': active
-                }"
-              />
-              <div
-                class="text-[10px] mt-1 text-center"
-                :class="{
-                  'text-dimmed': !active,
-                  'font-bold scale-125': active
-                }"
-              >
-                {{ item.label }}
-              </div>
-            </div>
-          </template>
-        </UNavigationMenu>
-        <UNavigationMenu
-          :collapsed="collapsed"
-          :items="links[0]"
-          orientation="vertical"
-          tooltip
-          popover
-        >
-          <template #item="{ item }">
-            <div
-              :class="{
-                'flex-col': collapsed,
-                'flex-row items-center gap-2': !collapsed
-              }"
-              class="overflow-hidden flex items-center justify-center truncate"
-            >
-              <UIcon :name="item.icon" class="size-5" />
-              <div
-                :class="{
-                  'text-[8px]': collapsed
-                }"
-              >
-                {{ item.label }}
-              </div>
-            </div>
-          </template>
-        </UNavigationMenu>
+        />
       </template>
     </UDashboardSidebar>
 
