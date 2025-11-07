@@ -18,6 +18,7 @@ export default defineAppConfig({
       slots: {
         body: 'scrollbar-thin'
       }
-    }
+    },
+    theme: 'light'
   }
 })
