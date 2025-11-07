@@ -53,21 +53,23 @@ defineShortcuts({
 
 <template>
   <UDashboardPanel
-    class="bg-elevated/15 transition-all duration-300 hidden md:block"
+    class="bg-elevated/25 transition-all duration-300 hidden md:block"
     :class="{
-      'w-17 max-w-17': isCollapsedLeftSidebar,
-      'w-64 max-w-64': !isCollapsedLeftSidebar
+      'w-18 max-w-18': isCollapsedLeftSidebar && currentRightNavigator?.title,
+      'w-64 max-w-64': !isCollapsedLeftSidebar,
+      'w-0 max-w-0': !currentRightNavigator?.items?.length || isCollapsedLeftSidebar
     }"
     :ui="{
-      body: 'px-0 py-0 gap-0 sm:p-0 sm:gap-0'
+      body: 'px-0 py-0 gap-0 sm:p-0 sm:gap-0 scrollbar-thin'
     }"
   >
     <template #header>
       <UDashboardNavbar
+        v-if="false"
         :ui="{
           root:
             'sm:px-2 w-full flex justify-between '
-            + (isCollapsedLeftSidebar ? 'h-32' : ''),
+            + (isCollapsedLeftSidebar ? '' : ''),
           center:
             'flex justify-between gap-2 '
             + (isCollapsedLeftSidebar ? '' : 'flex-1')
@@ -82,7 +84,7 @@ defineShortcuts({
               isCollapsedLeftSidebar
           }"
         >
-          <UTooltip text="Notifications" :shortcuts="['N']">
+          <!-- <UTooltip text="Notifications" :shortcuts="['N']">
             <UButton
               color="neutral"
               :variant="isCollapsedLeftSidebar ? 'ghost' : 'ghost'"
@@ -94,13 +96,31 @@ defineShortcuts({
                 <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
               </UChip>
             </UButton>
-          </UTooltip>
+          </UTooltip> -->
           <UserMenu
             :collapsed="isCollapsedLeftSidebar"
             :class="{
               'w-full flex-1': !isCollapsedLeftSidebar
             }"
           />
+        </div>
+      </UDashboardNavbar>
+      <UDashboardNavbar v-if="currentRightNavigator?.title" class="bg-elevated/95">
+        <div
+          :class="{
+            'py-0 text-center': isCollapsedLeftSidebar,
+            'py-2': !isCollapsedLeftSidebar
+          }"
+        >
+          <UIcon
+            v-if="isCollapsedLeftSidebar"
+            name="i-solar-hamburger-menu-line-duotone"
+            class="text-xl"
+          />
+
+          <span v-else class="text-xs font-bold">
+            {{ currentRightNavigator?.title }}
+          </span>
         </div>
       </UDashboardNavbar>
     </template>
@@ -197,7 +217,7 @@ defineShortcuts({
       <slot v-else>
         <div
           v-if="!isCollapsedLeftSidebar"
-          class="h-full flex flex-col gap-4 p-2"
+          class="h-screen flex flex-col gap-4 p-2 items-center justify-center"
         >
           <img
             src="/banner02.jpeg"
@@ -210,9 +230,16 @@ defineShortcuts({
       </slot>
     </template>
     <template #footer>
-      <div v-if="isCollapsedLeftSidebar" class="justify-center items-end flex lg:hidden">
+      <div
+        v-if="isCollapsedLeftSidebar"
+        class="justify-center items-end flex lg:hidden"
+      >
         <UButton
-          :icon="isShowMobileNavigator ? 'i-system-uicons-pull-down' : 'i-clarity-storage-outline-badged'"
+          :icon="
+            isShowMobileNavigator
+              ? 'i-system-uicons-pull-down'
+              : 'i-clarity-storage-outline-badged'
+          "
           size="xl"
           :color="isShowMobileNavigator ? 'neutral' : 'primary'"
           variant="soft"

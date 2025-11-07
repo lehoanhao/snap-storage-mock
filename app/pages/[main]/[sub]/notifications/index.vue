@@ -51,7 +51,7 @@ watch(filteredMails, () => {
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const isMobile = breakpoints.smaller('lg')
 
-const showFull = ref(true)
+const showFull = ref(false)
 </script>
 
 <template>

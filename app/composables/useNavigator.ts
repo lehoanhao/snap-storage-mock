@@ -72,7 +72,7 @@ const _useNavigator = () => {
         ]
       },
       osbs: {
-        title: '事業所設定',
+        title: '基本情報設定メニュー',
         items: [
           {
             label: 'ユーザー情報',

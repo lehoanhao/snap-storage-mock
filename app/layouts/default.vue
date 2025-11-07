@@ -109,7 +109,7 @@ onMounted(async () => {
       :ui="{
         header: 'h-[63px]',
         footer: 'lg:border-t lg:border-default',
-        body: 'px-0 py-0 gap-0'
+        body: 'px-0 py-0 gap-0 hide-scrollbar'
       }"
     >
       <template #header="{ collapsed }">
@@ -117,7 +117,7 @@ onMounted(async () => {
           :collapsed="collapsed"
           size="xl"
           class="cursor-pointer mx-auto"
-          @click="navigateTo('/fax/0/notifications')"
+          @click="navigateTo('/home/0/notifications')"
         />
       </template>
 
@@ -128,6 +128,15 @@ onMounted(async () => {
           class="border-default"
           :class="{
             'border-t': collapsed
+          }"
+        />
+      </template>
+
+      <template #footer="{ collapsed }">
+        <UserMenu
+          :collapsed="collapsed"
+          :class="{
+            'w-full flex-1': !collapsed
           }"
         />
       </template>

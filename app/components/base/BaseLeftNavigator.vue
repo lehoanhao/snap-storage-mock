@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="currentNavigator?.title"
     class="px-3 text-xs text-muted font-mono font-semibold bg-primary/10 border-b border-default truncate"
     :class="{
       'py-0 text-center': collapsed,

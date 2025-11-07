@@ -52,3 +52,10 @@ body::-webkit-scrollbar-thumb {
 .scrollbar-only-hover:hover::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.1) !important;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none !important;
+}
+.hide-scrollbar {
+    scrollbar-width: none !important;
+}

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid "
+    class="grid"
     :class="{
       'grid-cols-1': collapsed,
       'grid-cols-3': !collapsed,
@@ -8,7 +8,11 @@
       'divide-x divide-y border-y border-default divide-default': !full
     }"
   >
-    <div v-for="(item, index) in items" :key="index" class="p-3 last:border-r border-default">
+    <div
+      v-for="(item, index) in items"
+      :key="index"
+      class="p-3 cursor-pointer last:border-r border-default"
+    >
       <div
         :class="{
           'relative justify-center items-center': item.active
@@ -23,20 +27,30 @@
             'scale-125': active,
           }"
         /> -->
-        <UAvatar
-          :icon="item.active ? item.iconActive : item.icon"
-          size="2xl"
-          class="rounded-xl group-hover:scale-125 transition-all duration-200"
-          :ui="{
-            root: item.active ? item?.ui?.active?.bg : item?.ui?.inactive?.bg,
-            icon: '!text-3xl ' + (item.active
-              ? item?.ui?.active?.text
-              : item?.ui?.inactive?.text)
-          }"
-          :class="{
-            'scale-150 absolute -top-2': item.active && full
-          }"
-        />
+        <UChip
+          inset
+          size="3xl"
+          color="error"
+          :show="!!item.chip"
+          class="justify-center items-center flex"
+        >
+          <UAvatar
+            :icon="item.active ? item.iconActive : item.icon"
+            size="2xl"
+            class="rounded-xl group-hover:scale-125 transition-all duration-200"
+            :ui="{
+              root: item.active ? item?.ui?.active?.bg : item?.ui?.inactive?.bg,
+              icon:
+                '!text-3xl '
+                + (item.active
+                  ? item?.ui?.active?.text
+                  : item?.ui?.inactive?.text)
+            }"
+            :class="{
+              'scale-150 absolute -top-2': item.active && full
+            }"
+          />
+        </UChip>
 
         <div
           class="text-xs mt-1 text-center truncate"
@@ -148,6 +162,25 @@ const items = computed(() => {
           text: 'text-yellow-700 text-2xl dark:text-yellow-500'
         }
       }
+    },
+    {
+      id: 'home',
+      label: 'お知らせ',
+      iconActive: 'i-solar-bell-bing-linear',
+      icon: 'i-solar-bell-bing-bold',
+      to: '/home/0/notifications',
+      active: route.params.main === 'home',
+      ui: {
+        active: {
+          bg: 'bg-purple-500/80',
+          text: 'text-white text-2xl'
+        },
+        inactive: {
+          bg: 'border-default border bg-purple-50 dark:bg-default dark:border-default',
+          text: 'text-purple-700 text-2xl dark:text-purple-500'
+        }
+      },
+      chip: '5'
     }
   ]
     .filter((item) => {

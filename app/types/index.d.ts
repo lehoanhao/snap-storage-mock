@@ -21,6 +21,24 @@ export interface Mail {
   date: string
 }
 
+export interface FaxSender {
+  name: string
+  number: string
+  company?: string
+  department?: string
+}
+
+export interface Fax {
+  id: number
+  unread?: boolean
+  sender: FaxSender
+  subject: string
+  summary: string
+  content: string
+  receivedAt: string
+  pages: number
+}
+
 export interface Member {
   name: string
   username: string
