@@ -19,6 +19,11 @@ export default defineAppConfig({
         body: 'scrollbar-thin'
       }
     },
+    switch: {
+      defaultVariants: {
+        size: 'xl'
+      }
+    },
     theme: 'light'
   }
 })

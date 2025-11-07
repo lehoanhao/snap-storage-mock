@@ -56,8 +56,8 @@ defineShortcuts({
     class="bg-elevated/25 transition-all duration-300 hidden md:block"
     :class="{
       'w-18 max-w-18': isCollapsedLeftSidebar && currentRightNavigator?.title,
-      'w-64 max-w-64': !isCollapsedLeftSidebar,
-      'w-0 max-w-0': !currentRightNavigator?.items?.length || isCollapsedLeftSidebar
+      'w-64 max-w-64': !isCollapsedLeftSidebar || route.params.main == 'home',
+      'w-0 max-w-0': route.params.main != 'home' && (!currentRightNavigator?.items?.length || isCollapsedLeftSidebar)
     }"
     :ui="{
       body: 'px-0 py-0 gap-0 sm:p-0 sm:gap-0 scrollbar-thin'
@@ -216,7 +216,7 @@ defineShortcuts({
       </div>
       <slot v-else>
         <div
-          v-if="!isCollapsedLeftSidebar"
+          v-if="route.params.sub == '0'"
           class="h-screen flex flex-col gap-4 p-2 items-center justify-center"
         >
           <img
@@ -226,7 +226,6 @@ defineShortcuts({
 
           <!-- <img src="/banner01.jpeg"> -->
         </div>
-        <div v-else class="flex-1" />
       </slot>
     </template>
     <template #footer>

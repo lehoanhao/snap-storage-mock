@@ -36,7 +36,7 @@ const fields = [
     name: 'remember',
     label: 'ログイン状態を保持する',
     type: 'checkbox' as const,
-    size: 'md'
+    size: 'xl'
   }
 ]
 
@@ -76,11 +76,14 @@ function onSubmit(payload: FormSubmitEvent<Schema>) {
     :schema="schema"
     title="おかえりなさい"
     icon="i-lucide-lock"
-    :submit="{
-      class: 'hidden'
-    }"
     :ui="{
       input: '!rounded-full'
+    }"
+    :submit="{
+      class: 'rounded-full justify-center',
+      label: 'ログイン',
+      trailingIcon: 'i-lucide-arrow-right',
+      size: 'xl'
     }"
     @submit="onSubmit"
   >

@@ -4,14 +4,18 @@
     :class="{
       'grid-cols-1': collapsed,
       'grid-cols-3': !collapsed,
-      'grid-cols-5': full,
+      'grid-cols-6': full,
       'divide-x divide-y border-y border-default divide-default': !full
     }"
   >
     <div
       v-for="(item, index) in items"
       :key="index"
-      class="p-3 cursor-pointer last:border-r border-default"
+      class="p-3 cursor-pointer"
+      :class="{
+        'px-4 ': full,
+        'last:border-r border-default': !full
+      }"
     >
       <div
         :class="{
@@ -132,7 +136,7 @@ const items = computed(() => {
       label: '利用者設定',
       iconActive: 'i-tdesign-user-setting',
       icon: 'i-tdesign-user-setting-filled',
-      to: '/us/bs/settings/office/basic/user',
+      to: '/us/bs/settings/user',
       active: route.params.main === 'us',
       ui: {
         active: {

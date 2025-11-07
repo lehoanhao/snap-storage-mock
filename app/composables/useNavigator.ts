@@ -32,9 +32,15 @@ const _useNavigator = () => {
         color: 'blue',
         items: [
           {
-            label: '掲示板一覧',
-            icon: 'i-solar-clipboard-linear',
+            label: '事業所掲示板',
+            icon: 'i-solar-clipboard-text-broken',
             to: '/board/0/'
+          },
+          // 検索
+          {
+            label: '検索',
+            icon: 'i-solar-card-search-linear',
+            to: '/board/search'
           }
         ]
       },
@@ -43,9 +49,15 @@ const _useNavigator = () => {
         color: 'cyan',
         items: [
           {
-            label: '書類一覧',
+            label: '事業所フォルダ',
             icon: 'i-solar-folder-open-linear',
             to: '/folder/0/'
+          },
+          // 検索
+          {
+            label: 'フォルダ検索',
+            icon: 'i-solar-card-search-linear',
+            to: '/folder/search'
           }
         ]
       },
@@ -65,7 +77,7 @@ const _useNavigator = () => {
             label: '契約内容',
             icon: 'i-solar-file-text-broken',
             to: {
-              path: '/os/ct/settings/office/basic/user',
+              path: '/os/ct/settings/office/contract/fax',
               hash: route.hash
             }
           }
@@ -95,17 +107,61 @@ const _useNavigator = () => {
           }
         ]
       },
-
+      osct: {
+        title: '契約内容設定メニュー',
+        items: [
+          {
+            label: 'FAX',
+            icon: 'i-fa-fax',
+            to: '/os/ct/settings/office/contract/fax'
+          },
+          {
+            label: 'ファイルストレージ',
+            icon: 'i-icon-park-outline-cloud-storage',
+            to: '/os/ct/settings/office/contract/file-storage'
+          },
+          {
+            label: 'アカウント',
+            icon: 'i-material-symbols-account-child-outline',
+            to: '/os/ct/settings/office/contract/account'
+          },
+          {
+            label: '郵送DM',
+            icon: 'i-tabler-mail-bolt',
+            disabled: true
+          }
+        ]
+      },
       us: {
         title: '利用者設定',
         color: 'green',
         items: [
           {
-            label: '基本情報',
-            icon: 'i-solar-user-circle-broken',
+            label: '新規追加',
+            icon: 'i-solar-add-square-broken',
             to: {
-              path: '/us/bs/settings/office/basic/user'
+              path: '/us/0/settings/user/new'
             }
+          }
+        ]
+      },
+      usbs: {
+        title: '利用者設定メニュー',
+        items: [
+          {
+            label: '利用者情報',
+            icon: 'i-solar-user-id-linear',
+            to: '/us/bs/settings/user'
+          },
+          {
+            label: 'ケアマネ情報',
+            icon: 'i-healthicons-child-care-outline',
+            to: '/us/bs/settings/user/care-manager'
+          },
+          {
+            label: '関係者情報',
+            icon: 'i-fluent-people-link-28-filled',
+            to: '/us/bs/settings/user/related-persons'
           }
         ]
       }

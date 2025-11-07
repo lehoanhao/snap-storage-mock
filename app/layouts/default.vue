@@ -158,7 +158,7 @@ onMounted(async () => {
     >
       <div
         v-if="isShowMobileNavigator"
-        class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 border border-default bg-default/80 rounded-full shadow-2xl backdrop-blur-md px-4 py-0"
+        class="w-5/6 fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 border border-default bg-default/80 rounded-full shadow-2xl backdrop-blur-md px-4 py-0"
       >
         <BaseMainNavigator :collapsed="false" :full="true" />
       </div>
