@@ -34,7 +34,7 @@ const _useNavigator = () => {
           {
             label: '掲示板一覧',
             icon: 'i-solar-clipboard-linear',
-            to: '/bulletin-board/list'
+            to: '/board/0/'
           }
         ]
       },
@@ -65,7 +65,7 @@ const _useNavigator = () => {
             label: '契約内容',
             icon: 'i-solar-file-text-broken',
             to: {
-              path: '/settings/office/user/contract',
+              path: '/os/ct/settings/office/basic/user',
               hash: route.hash
             }
           }
@@ -95,6 +95,7 @@ const _useNavigator = () => {
           }
         ]
       },
+
       us: {
         title: '利用者設定',
         color: 'green',

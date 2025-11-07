@@ -2,7 +2,7 @@ import { createSharedComposable } from '@vueuse/core'
 
 const _useApp = () => {
   const isCollapsedLeftSidebar = ref(false)
-  const isShowMobileNavigator = ref(false)
+  const isShowMobileNavigator = ref(true)
 
   return {
     isCollapsedLeftSidebar,
