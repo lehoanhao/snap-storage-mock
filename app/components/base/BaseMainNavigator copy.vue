@@ -1,20 +1,26 @@
 <template>
-  <div
-    class="grid "
+  <UNavigationMenu
+    :collapsed="collapsed"
+    :items="items"
+    :orientation="collapsed ? 'vertical' : 'horizontal'"
+    class="w-fullnavigator-full"
     :class="{
-      'grid-cols-1': collapsed,
-      'grid-cols-3': !collapsed,
-      'grid-cols-5': full,
-      'divide-x divide-y border-y border-default divide-default': !full
+      ' border-b border-t border-default ': !props.full
     }"
+    :ui="{
+      list: 'justify-between grid grid-cols-3' + (full ? 'gap-6' : ''),
+      item: 'flex-1 py-1 items-center',
+      link: 'after:-bottom-0 after:inset-x-2.5 after:block after:h-0.5'
+    }"
+    color="primary"
+    variant="link"
   >
-    <div v-for="(item, index) in items" :key="index" class="p-3 last:border-r border-default">
+    <template #item="{ item, active }">
       <div
         :class="{
-          'relative justify-center items-center': item.active
+          'relative w-[80px] justify-center items-center': active
         }"
-        class="mx-auto group overflow-visible flex flex-col gap-1 items-center justify-center truncate"
-        @click="navigateTo(item.to)"
+        class="pl-1.5 mx-auto group overflow-visible flex flex-col gap-1 items-center justify-center truncate"
       >
         <!-- <UIcon
           :name="active ? item.iconActive : item.icon"
@@ -24,34 +30,32 @@
           }"
         /> -->
         <UAvatar
-          :icon="item.active ? item.iconActive : item.icon"
-          size="2xl"
+          :icon="active ? item.iconActive : item.icon"
+          size="lg"
           class="rounded-xl group-hover:scale-125 transition-all duration-200"
           :ui="{
-            root: item.active ? item?.ui?.active?.bg : item?.ui?.inactive?.bg,
-            icon: '!text-3xl ' + (item.active
-              ? item?.ui?.active?.text
-              : item?.ui?.inactive?.text)
+            root: active ? item?.ui?.active?.bg : item?.ui?.inactive?.bg,
+            icon: active ? item?.ui?.active?.text : item?.ui?.inactive?.text
           }"
           :class="{
-            'scale-150 absolute -top-2': item.active && full
+            'scale-150 absolute -top-10': active && full
           }"
         />
 
         <div
           class="text-xs mt-1 text-center truncate"
           :class="{
-            '': !item.active,
-            'font-bold': item.active,
+            '': !active,
+            'font-bold': active,
             'text-[10px]': collapsed,
-            'absolute -bottom-17 text-[14px]': full && item.active
+            'absolute -bottom-8 text-[12px]': full && active
           }"
         >
           {{ item.label }}
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </UNavigationMenu>
 </template>
 
 <script setup lang="ts">

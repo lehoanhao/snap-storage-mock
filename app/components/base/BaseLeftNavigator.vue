@@ -43,7 +43,7 @@
       >
         <UIcon
           :name="item.icon"
-          class="size-5"
+          class="size-8"
           :class="{
             'ml-4': !collapsed
           }"

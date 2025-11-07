@@ -6,12 +6,12 @@ export default defineAppConfig({
     },
     input: {
       defaultVariants: {
-        size: 'md'
+        size: 'xl'
       }
     },
     pinInput: {
       defaultVariants: {
-        size: 'md'
+        size: 'xl'
       }
     },
     dashboardPanel: {

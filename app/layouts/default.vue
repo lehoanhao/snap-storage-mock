@@ -115,7 +115,7 @@ onMounted(async () => {
       <template #header="{ collapsed }">
         <BaseLogo
           :collapsed="collapsed"
-          size="md"
+          size="xl"
           class="cursor-pointer mx-auto"
           @click="navigateTo('/fax/0/notifications')"
         />

@@ -44,7 +44,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
 </script>
 
 <template>
-  <UDashboardPanel id="settings" :ui="{ body: 'lg:pb-12' }">
+  <UDashboardPanel id="settings" :ui="{ body: 'lg:pb-12' }" class="">
     <template #header>
       <UDashboardNavbar title="基本設定">
         <template #leading>
@@ -54,7 +54,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
     </template>
 
     <template #body>
-      <div class="flex flex-col gap-4 sm:gap-6 lg:gap-12 w-full mx-auto">
+      <div class="flex flex-col gap-2 sm:gap-6 lg:gap-12 w-full max-w-xl mx-auto ">
         <UForm
           id="settings"
           :schema="profileSchema"
@@ -75,7 +75,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               label="事業所ID"
               description="8桁の英数字で構成された事業所ID"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4"
+              class="flex flex-col gap-2"
             >
               <UPinInput
                 v-model="profile.officeId"
@@ -84,13 +84,13 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
                 :length="8"
               />
             </UFormField>
-
+            <USeparator />
             <UFormField
               name="customerNumber"
               label="お客様番号"
               description="※サービス提供者にて付与された8桁の英数字のお客様番号"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4"
+              class="flex flex-col gap-2"
             >
               <UPinInput
                 v-model="profile.customerNumber"
@@ -105,11 +105,12 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               label="送信FAX番号"
               description="※事業所からFAX送信時に送信先へ表示される番号"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4"
+              class="flex flex-col gap-2"
             >
               <UInput
                 v-model="profile.faxNumber"
                 v-mask="'##-####-####'"
+                class="w-full"
                 placeholder="00-0000-0000"
                 type="text"
                 autocomplete="off"
@@ -121,11 +122,12 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               label="受信FAX番号"
               description="※事業所のFAX受信番号"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4"
+              class="flex flex-col gap-2"
             >
               <UInput
                 v-model="profile.faxNumberReceive"
                 v-mask="'##-####-####'"
+                class="w-full"
                 placeholder="00-0000-0000"
                 type="text"
                 autocomplete="off"
@@ -137,11 +139,12 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               label="SMS番号"
               description="※事業所からSMSを送信時に送信先へ表示される番号"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4"
+              class="flex flex-col gap-2"
             >
               <UInput
                 v-model="profile.faxNumberReceive"
                 v-mask="'##-####-####'"
+                class="w-full"
                 placeholder="00-0000-0000"
                 type="text"
                 autocomplete="off"
@@ -153,15 +156,14 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               label="送信E‐mail"
               description="※事業所からSMSを送信時に送信先へ表示される番号。"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4"
+              class="flex flex-col gap-2"
             >
               <UInput
                 v-model="profile.email"
+                class="w-full"
                 placeholder="example@example.com"
                 type="email"
                 autocomplete="off"
-
-                class="w-80"
               />
             </UFormField>
           </UPageCard>

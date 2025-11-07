@@ -106,7 +106,7 @@ defineShortcuts({
     </template>
 
     <template #body>
-      <UNavigationMenu
+      <!-- <UNavigationMenu
         v-if="!isCollapsedLeftSidebar"
         :collapsed="isCollapsedLeftSidebar"
         :items="items"
@@ -148,7 +148,7 @@ defineShortcuts({
             </div>
           </div>
         </template>
-      </UNavigationMenu>
+      </UNavigationMenu> -->
       <div v-if="route.params.sub != '0'">
         <UNavigationMenu
           :collapsed="isCollapsedLeftSidebar"
@@ -177,14 +177,14 @@ defineShortcuts({
             >
               <UIcon
                 :name="item.icon"
-                class="size-5"
+                class="size-8"
                 :class="{
                   'ml-3': !isCollapsedLeftSidebar
                 }"
               />
               <div
                 :class="{
-                  'text-[8px] text-center truncate': isCollapsedLeftSidebar,
+                  'text-[10px] text-center truncate': isCollapsedLeftSidebar,
                   'text-left': !isCollapsedLeftSidebar
                 }"
               >

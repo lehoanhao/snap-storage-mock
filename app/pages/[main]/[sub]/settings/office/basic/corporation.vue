@@ -52,7 +52,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
     </template>
 
     <template #body>
-      <div class="flex flex-col gap-4 sm:gap-6 lg:gap-12 w-full mx-auto">
+      <div class="flex flex-col gap-2 sm:gap-6 lg:gap-12 w-full max-w-xl mx-auto">
         <UForm
           id="settings"
           :schema="profileSchema"
@@ -79,12 +79,12 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               label="法人名"
               description="正式な法人です"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-col gap-2 not-last:pb-4"
             >
               <UInput
                 v-model="profile.companyName"
                 autocomplete="off"
-                class="sm:w-96"
+                class="w-full"
               />
             </UFormField>
 
@@ -92,20 +92,20 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="companyAddress"
               label="法人住所"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-col gap-2 not-last:pb-4"
             >
               <div class="flex flex-col gap-2 justify-end sm:items-end">
                 <UInput
                   model-value="134-0063"
                   autocomplete="off"
-                  class="sm:w-96"
+                  class="w-full"
                   icon="i-solar-map-point-wave-broken"
                 />
                 <UTextarea
                   v-model="profile.companyAddress"
                   :rows="3"
                   autoresize
-                  class="sm:w-96"
+                  class="w-full"
                 />
               </div>
             </UFormField>
@@ -129,12 +129,12 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="contractManager"
               label="契約担当"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-col gap-2 not-last:pb-4"
             >
               <UInput
                 v-model="profile.contractManager"
                 autocomplete="off"
-                class="sm:w-96"
+                class="w-full"
               />
             </UFormField>
 
@@ -142,7 +142,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="contractPhone"
               label="契約担当 電話番号"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-col gap-2 not-last:pb-4"
             >
               <UInput
                 v-model="profile.contractPhone"
@@ -150,7 +150,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
                 placeholder="00-0000-0000"
                 type="text"
                 autocomplete="off"
-                class="sm:w-96"
+                class="w-full"
               />
             </UFormField>
 
@@ -158,13 +158,13 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="contractEmail"
               label="契約担当 E-mail"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-col gap-2 not-last:pb-4"
             >
               <UInput
                 v-model="profile.contractEmail"
                 type="email"
                 autocomplete="off"
-                class="sm:w-96"
+                class="w-full"
               />
             </UFormField>
           </UPageCard>
@@ -187,12 +187,12 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="billingManager"
               label="請求担当"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-col gap-2 not-last:pb-4"
             >
               <UInput
                 v-model="profile.billingManager"
                 autocomplete="off"
-                class="sm:w-96"
+                class="w-full"
               />
             </UFormField>
 
@@ -200,7 +200,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="billingPhone"
               label="請求担当 電話番号"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-col gap-2 not-last:pb-4"
             >
               <UInput
                 v-model="profile.billingPhone"
@@ -208,7 +208,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
                 placeholder="00-0000-0000"
                 type="text"
                 autocomplete="off"
-                class="sm:w-96"
+                class="w-full"
               />
             </UFormField>
 
@@ -216,13 +216,13 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="billingEmail"
               label="請求担当 E-mail"
               required
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-col gap-2 not-last:pb-4"
             >
               <UInput
                 v-model="profile.billingEmail"
                 type="email"
                 autocomplete="off"
-                class="sm:w-96"
+                class="w-full"
               />
             </UFormField>
           </UPageCard>
@@ -245,7 +245,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="sendInvoiceByEmail"
               label="請求書メール配信"
               description="請求書をメールで自動配信します。請求担当者のE-mail宛に送信されます。"
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-row items-start justify-between gap-4 not-last:pb-4"
             >
               <USwitch
                 v-model="profile.sendInvoiceByEmail"
@@ -256,7 +256,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
               name="bankTransferRegistered"
               label="口座振替登録完了"
               description="口座振替登録が完了している場合はチェックを入れてください。"
-              class="flex max-sm:flex-col justify-between items-start gap-4 not-last:pb-4"
+              class="flex flex-row items-start justify-between gap-4 not-last:pb-4"
             >
               <USwitch
                 v-model="profile.bankTransferRegistered"
