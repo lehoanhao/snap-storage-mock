@@ -116,7 +116,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
             title="契約担当者情報"
             variant="naked"
             orientation="horizontal"
-            class="mb-4 mt-4"
+            class="mb-4 mt-8"
             :ui="{
               wrapper: 'flex-row gap-2'
             }"
@@ -174,7 +174,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
             title="請求担当者情報"
             variant="naked"
             orientation="horizontal"
-            class="mb-4 mt-4"
+            class="mb-4 mt-8"
             :ui="{
               wrapper: 'flex-row gap-2'
             }"
@@ -232,7 +232,7 @@ async function onSubmit(event: FormSubmitEvent<ProfileSchema>) {
             title="請求設定"
             variant="naked"
             orientation="horizontal"
-            class="mb-4 mt-4"
+            class="mb-4 mt-8"
             :ui="{
               wrapper: 'flex-row gap-2'
             }"
