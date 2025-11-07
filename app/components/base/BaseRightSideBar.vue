@@ -4,7 +4,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const route = useRoute()
 const { isNotificationsSlideoverOpen } = useDashboard()
 const { currentRightNavigator } = useNavigator()
-const { isCollapsedLeftSidebar } = useApp()
+const { isCollapsedLeftSidebar, isShowMobileNavigator } = useApp()
 const items = computed(() => {
   return [
     {
@@ -55,7 +55,7 @@ defineShortcuts({
   <UDashboardPanel
     class="bg-elevated/15 transition-all duration-300 hidden md:block"
     :class="{
-      'w-28 max-w-28': isCollapsedLeftSidebar,
+      'w-17 max-w-17': isCollapsedLeftSidebar,
       'w-64 max-w-64': !isCollapsedLeftSidebar
     }"
     :ui="{
@@ -65,28 +65,43 @@ defineShortcuts({
     <template #header>
       <UDashboardNavbar
         :ui="{
-          root: 'sm:px-2 w-full flex justify-between',
-          center: 'flex justify-between flex-1 gap-2'
+          root:
+            'sm:px-2 w-full flex justify-between '
+            + (isCollapsedLeftSidebar ? 'h-32' : ''),
+          center:
+            'flex justify-between gap-2 '
+            + (isCollapsedLeftSidebar ? '' : 'flex-1')
         }"
+        :toggle="false"
       >
-        <UTooltip text="Notifications" :shortcuts="['N']">
-          <UButton
-            color="neutral"
-            variant="ghost"
-            square
-            @click="navigateTo('/fax/0/notifications')"
-          >
-            <UChip color="error" inset>
-              <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
-            </UChip>
-          </UButton>
-        </UTooltip>
-        <UserMenu
-          :collapsed="isCollapsedLeftSidebar"
+        <div
+          class="flex"
           :class="{
-            'w-full flex-1': !isCollapsedLeftSidebar
+            'w-full flex-1 gap-2': !isCollapsedLeftSidebar,
+            'flex-col-reverse gap-3 py-4 justify-center items-center':
+              isCollapsedLeftSidebar
           }"
-        />
+        >
+          <UTooltip text="Notifications" :shortcuts="['N']">
+            <UButton
+              color="neutral"
+              :variant="isCollapsedLeftSidebar ? 'ghost' : 'ghost'"
+              square
+              :size="isCollapsedLeftSidebar ? 'xl' : 'lg'"
+              @click="navigateTo('/fax/0/notifications')"
+            >
+              <UChip color="error" inset>
+                <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
+              </UChip>
+            </UButton>
+          </UTooltip>
+          <UserMenu
+            :collapsed="isCollapsedLeftSidebar"
+            :class="{
+              'w-full flex-1': !isCollapsedLeftSidebar
+            }"
+          />
+        </div>
       </UDashboardNavbar>
     </template>
 
@@ -107,7 +122,7 @@ defineShortcuts({
       >
         <template #item="{ item, active }">
           <div
-            class="group overflow-visible flex flex-col gap-1 items-center justify-center truncate"
+            class="group overflow-visible w-full flex flex-col gap-1 items-center justify-center truncate"
           >
             <UAvatar
               :icon="active ? item.iconActive : item.icon"
@@ -122,10 +137,11 @@ defineShortcuts({
             />
 
             <div
-              class="text-xs mt-1 text-center"
+              class="text-xs mt-1 text-center truncate"
               :class="{
                 '': !active,
-                'font-bold': active
+                'font-bold': active,
+                'text-[10px]': isCollapsedLeftSidebar
               }"
             >
               {{ item.label }}
@@ -153,16 +169,22 @@ defineShortcuts({
           <template #item="{ item, active }">
             <div
               :class="{
-                'flex-col gap-2': isCollapsedLeftSidebar,
+                'flex-col gap-2 w-full overflow-hidden': isCollapsedLeftSidebar,
                 'flex-row items-center gap-2': !isCollapsedLeftSidebar,
                 'border-r-default': !active
               }"
               class="border-r-4 rounded-r-sm py-3 overflow-hidden flex items-center justify-center truncate"
             >
-              <UIcon :name="item.icon" class="size-5 ml-3" />
+              <UIcon
+                :name="item.icon"
+                class="size-5"
+                :class="{
+                  'ml-3': !isCollapsedLeftSidebar
+                }"
+              />
               <div
                 :class="{
-                  'text-[10px] text-center': isCollapsedLeftSidebar,
+                  'text-[8px] text-center truncate': isCollapsedLeftSidebar,
                   'text-left': !isCollapsedLeftSidebar
                 }"
               >
@@ -173,7 +195,10 @@ defineShortcuts({
         </UNavigationMenu>
       </div>
       <slot v-else>
-        <div v-if="!isCollapsedLeftSidebar" class="h-full flex flex-col gap-4 p-2">
+        <div
+          v-if="!isCollapsedLeftSidebar"
+          class="h-full flex flex-col gap-4 p-2"
+        >
           <img
             src="/banner02.jpeg"
             class="object object-cover h-full rounded-2xl"
@@ -181,7 +206,20 @@ defineShortcuts({
 
           <!-- <img src="/banner01.jpeg"> -->
         </div>
+        <div v-else class="flex-1" />
       </slot>
+    </template>
+    <template #footer>
+      <div v-if="isCollapsedLeftSidebar" class="justify-center items-end flex lg:hidden">
+        <UButton
+          :icon="isShowMobileNavigator ? 'i-system-uicons-pull-down' : 'i-clarity-storage-outline-badged'"
+          size="xl"
+          :color="isShowMobileNavigator ? 'neutral' : 'primary'"
+          variant="soft"
+          class="absolute rounded-full bottom-8 z-50 border border-default justify-center mt-auto"
+          @click="isShowMobileNavigator = !isShowMobileNavigator"
+        />
+      </div>
     </template>
   </UDashboardPanel>
   <!-- <UDashboardSidebar

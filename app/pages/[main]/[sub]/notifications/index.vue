@@ -3,16 +3,21 @@ import { computed, ref, watch } from 'vue'
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Mail } from '~/types'
 
-const tabItems = [{
-  label: '全て',
-  value: 'all'
-}, {
-  label: '未読',
-  value: 'unread'
-}]
+const tabItems = [
+  {
+    label: '全て',
+    value: 'all'
+  },
+  {
+    label: '未読',
+    value: 'unread'
+  }
+]
 const selectedTab = ref('all')
 
-const { data: mails } = await useFetch<Mail[]>('/api/mails', { default: () => [] })
+const { data: mails } = await useFetch<Mail[]>('/api/mails', {
+  default: () => []
+})
 
 // Filter mails based on the selected tab
 const filteredMails = computed(() => {
@@ -45,12 +50,17 @@ watch(filteredMails, () => {
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const isMobile = breakpoints.smaller('lg')
+
+const showFull = ref(true)
 </script>
 
 <template>
   <UDashboardPanel
     id="inbox-1"
-    class="scrollbar-thin"
+    class="scrollbar-thin transition-all duration-300"
+    :class="{
+      '!w-56 min-w-0 flex-none': showFull && selectedMail
+    }"
   >
     <UDashboardNavbar title="お知らせ">
       <template #leading>
@@ -69,15 +79,29 @@ const isMobile = breakpoints.smaller('lg')
         />
       </template>
     </UDashboardNavbar>
-    <InboxList v-model="selectedMail" :mails="filteredMails" class="" />
+    <InboxList
+      v-model="selectedMail"
+      :mails="filteredMails"
+    />
   </UDashboardPanel>
 
-  <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+  <InboxMail
+    v-if="selectedMail"
+    v-model:show-full="showFull"
+    :mail="selectedMail"
+    class="shadow-2xl"
+    @close="selectedMail = null"
+  />
 
   <ClientOnly>
     <USlideover v-if="isMobile" v-model:open="isMailPanelOpen">
       <template #content>
-        <InboxMail v-if="selectedMail" :mail="selectedMail" @close="selectedMail = null" />
+        <InboxMail
+          v-if="selectedMail"
+          v-model="showFull"
+          :mail="selectedMail"
+          @close="selectedMail = null"
+        />
       </template>
     </USlideover>
   </ClientOnly>

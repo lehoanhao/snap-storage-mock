@@ -3,9 +3,12 @@
     :collapsed="collapsed"
     :items="items"
     :orientation="collapsed ? 'vertical' : 'horizontal'"
-    class="w-full border-b border-t border-default navigator-full"
+    class="w-fullnavigator-full"
+    :class="{
+      ' border-b border-t border-default ': !props.full
+    }"
     :ui="{
-      list: 'justify-between',
+      list: 'justify-between ' + (full ? 'gap-6' : ''),
       item: 'flex-1 py-1',
       link: 'after:-bottom-0 after:inset-x-2.5 after:block after:h-0.5'
     }"
@@ -14,7 +17,10 @@
   >
     <template #item="{ item, active }">
       <div
-        class="pl-1.5 group overflow-visible flex flex-col gap-1 items-center justify-center truncate"
+        :class="{
+          'relative w-[80px] justify-center items-center': active
+        }"
+        class="pl-1.5 mx-auto group overflow-visible flex flex-col gap-1 items-center justify-center truncate"
       >
         <!-- <UIcon
           :name="active ? item.iconActive : item.icon"
@@ -31,6 +37,9 @@
             root: active ? item?.ui?.active?.bg : item?.ui?.inactive?.bg,
             icon: active ? item?.ui?.active?.text : item?.ui?.inactive?.text
           }"
+          :class="{
+            'scale-150 absolute -top-10': active && full
+          }"
         />
 
         <div
@@ -38,7 +47,8 @@
           :class="{
             '': !active,
             'font-bold': active,
-            'text-[10px]': collapsed
+            'text-[10px]': collapsed,
+            'absolute -bottom-8 text-[12px]': full && active
           }"
         >
           {{ item.label }}
@@ -51,6 +61,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   collapsed: boolean | undefined
+  full?: boolean
 }>()
 const route = useRoute()
 const items = computed(() => {
@@ -146,7 +157,7 @@ const items = computed(() => {
     }
   ]
     .filter((item) => {
-      if (props.collapsed) {
+      if (props.collapsed || props.full) {
         return true
       }
       return !item.hidden

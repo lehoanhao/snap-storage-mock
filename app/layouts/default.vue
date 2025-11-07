@@ -4,7 +4,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const route = useRoute()
 const toast = useToast()
 
-const { isCollapsedLeftSidebar } = useApp()
+const { isCollapsedLeftSidebar, isShowMobileNavigator } = useApp()
 const links = [
   [
     {
@@ -138,4 +138,21 @@ onMounted(async () => {
     <slot />
     <NotificationsSlideover />
   </UDashboardGroup>
+  <div class="lg:hidden">
+    <Transition
+      enter-active-class="transition-all duration-300 ease-out"
+      enter-from-class="translate-y-6 opacity-0"
+      enter-to-class="translate-y-0 opacity-100"
+      leave-active-class="transition-all duration-200 ease-in"
+      leave-from-class="translate-y-0 opacity-100"
+      leave-to-class="translate-y-6 opacity-0"
+    >
+      <div
+        v-if="isShowMobileNavigator"
+        class="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 border border-default bg-default/80 rounded-full shadow-2xl backdrop-blur-md px-4 py-0"
+      >
+        <BaseMainNavigator :collapsed="false" :full="true" />
+      </div>
+    </Transition>
+  </div>
 </template>

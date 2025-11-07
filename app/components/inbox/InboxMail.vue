@@ -6,6 +6,7 @@ defineProps<{
   mail: Mail
 }>()
 
+const modelValue = defineModel<boolean>('showFull')
 const emits = defineEmits(['close'])
 
 const dropdownItems = [
@@ -20,6 +21,10 @@ const dropdownItems = [
     }
   ]
 ]
+
+const toggleShowFull = () => {
+  modelValue.value = !modelValue.value
+}
 </script>
 
 <template>
@@ -36,6 +41,14 @@ const dropdownItems = [
       </template>
 
       <template #right>
+        <UButton
+          :icon="
+            modelValue ? 'i-iconoir-collapse' : 'i-pixel-expand'
+          "
+          color="neutral"
+          variant="ghost"
+          @click="toggleShowFull"
+        />
         <UDropdownMenu :items="dropdownItems">
           <UButton
             icon="i-lucide-ellipsis-vertical"

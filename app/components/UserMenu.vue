@@ -78,10 +78,11 @@ const items = computed<DropdownMenuItem[][]>(() => ([
         trailingIcon: collapsed ? undefined : 'i-lucide-chevrons-up-down'
       }"
       color="neutral"
-      variant="soft"
+      :variant="collapsed ? 'soft' : 'soft'"
       block
       :square="collapsed"
       class="data-[state=open]:bg-elevated"
+      :size="collapsed ? 'xl' : 'lg'"
       :ui="{
         trailingIcon: 'text-dimmed'
       }"
